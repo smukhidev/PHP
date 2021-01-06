@@ -6,7 +6,7 @@
   // Merchant Return URL
   $return_url = 'http://XXXXX/return.php'; // Please ask over email
   // Customer IP
-  $clientIP = '127.0.0.1';
+  $clientIP = get_client_ip();
   $merchant_username = '*******'; // Please ask over email
   $merchant_password = '*******'; // Please ask over email
   $merchant_transaction_id_prefix = 'XXX'; // Please ask over email
@@ -45,4 +45,25 @@
     if(is_numeric($data))
       return $data;
   }
+
+  function get_client_ip()
+  {
+      $ipaddress = '';
+      if (isset($_SERVER['HTTP_CLIENT_IP']))
+          $ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+      else if (isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+          $ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+      else if (isset($_SERVER['HTTP_X_FORWARDED']))
+          $ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+      else if (isset($_SERVER['HTTP_FORWARDED_FOR']))
+          $ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+      else if (isset($_SERVER['HTTP_FORWARDED']))
+          $ipaddress = $_SERVER['HTTP_FORWARDED'];
+      else if (isset($_SERVER['REMOTE_ADDR']))
+          $ipaddress = $_SERVER['REMOTE_ADDR'];
+      else
+          $ipaddress = 'UNKNOWN';
+      return $ipaddress;
+  }
+
 ?>
